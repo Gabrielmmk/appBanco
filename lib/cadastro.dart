@@ -7,7 +7,20 @@ class CadastroPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastre-se'),
+        title:
+        const Text(
+          'Cadastro',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.blue,
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
