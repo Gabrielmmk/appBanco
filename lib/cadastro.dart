@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:email_validator/email_validator.dart';
 
 class CadastroPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -60,9 +61,12 @@ class CadastroPage extends StatelessWidget {
                   validator: (value){
                     if (value == null || value.isEmpty){
                       return 'Por favor, insira seu email';
+                    }else if(!EmailValidator.validate(value)){
+                      return 'Por favor, insira um email válido';
                     }
                     return null;
                   },
+
                 ),
                 const SizedBox(height: 20),
                 const Text(
