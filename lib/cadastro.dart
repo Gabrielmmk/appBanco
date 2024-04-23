@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CadastroPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+  final cpfFormatter = MaskTextInputFormatter(mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')});
 
   CadastroPage({super.key});
 
@@ -68,6 +70,7 @@ class CadastroPage extends StatelessWidget {
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 TextFormField(
+                  inputFormatters: [cpfFormatter],
                   decoration: const InputDecoration(
                     hintText: 'Digite seu CPF',
                   ),
