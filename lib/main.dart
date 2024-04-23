@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'cadastro.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,6 +10,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,9 @@ class _MyFormPageState extends State<MyFormPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
+  final cpfFormatter = MaskTextInputFormatter(mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')});
+
+  bool _obscureText = false;
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +63,12 @@ class _MyFormPageState extends State<MyFormPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               TextFormField(
+                inputFormatters: [cpfFormatter],
                 controller: _nameController,
                 decoration: const InputDecoration(
                   labelText: 'CPF',
                 ),
+                keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor, insira seu CPF';
@@ -68,10 +77,21 @@ class _MyFormPageState extends State<MyFormPage> {
                 },
               ),
               TextFormField(
+                obscureText: _obscureText == false ? true : false,
                 controller: _emailController,
-                decoration: const InputDecoration(
+                decoration:  InputDecoration(
                   labelText: 'Senha',
+                  suffixIcon: GestureDetector(
+                    child: Icon(_obscureText == false ? Icons.visibility_off : Icons.visibility),
+                    onTap: (){
+                      setState(() {
+                        _obscureText =! _obscureText;
+                      });
+                    },
+                  ),
+
                 ),
+
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor, insira sua Senha';
