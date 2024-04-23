@@ -42,6 +42,7 @@ class CadastroPage extends StatelessWidget {
                   decoration: const InputDecoration(
                     hintText: 'Digite seu nome',
                   ),
+                  textCapitalization: TextCapitalization.words,
                   validator: (value){
                     if (value == null || value.isEmpty){
                       return 'Por favor, insira seu nome';
@@ -113,7 +114,7 @@ class CadastroPage extends StatelessWidget {
                         const SnackBar(
                             backgroundColor: Colors.blue,
                             content: Text(
-                              'Você está cadastrado!',
+                              'Parabéns, seu cadastro foi um sucesso!',
                               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                             )
                         ),
