@@ -3,12 +3,6 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import 'main.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: SplashScreen(), // Definindo SplashScreen como a tela inicial
-  ));
-}
-
 
 class FullScreenImage extends StatelessWidget {
   final String imagePath;

@@ -1,3 +1,4 @@
+import 'package:appbancoteste/telaInicio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -5,7 +6,9 @@ import 'cadastro.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MaterialApp(
+    home: SplashScreen(), // Definindo SplashScreen como a tela inicial
+  ));
 }
 
 class MyApp extends StatelessWidget {
