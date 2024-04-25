@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Nexus Bank',
+      title: 'Paradox Bank',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -44,7 +44,7 @@ class _MyFormPageState extends State<MyFormPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-            'Nexus Bank',
+            'Paradox Bank',
             style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -106,7 +106,7 @@ class _MyFormPageState extends State<MyFormPage> {
                     if (_formKey.currentState!.validate()) {
                       // Process the data
                       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Form submitted')));
+                          SnackBar(content: Text('Dados certos')));
                     }
                   },
                   style: ButtonStyle(
