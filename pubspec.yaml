@@ -34,6 +34,7 @@ dependencies:
   email_validator: '^2.1.16'
   loading_animation_widget:
   flutter_native_splash: ^2.4.0
+  flutter_launcher_icons: ^0.13.1
   cupertino_icons: ^1.0.6
 
 
@@ -47,6 +48,14 @@ flutter_native_splash:
     color: "#2196F3"
     icon_background_color: "#2196F3"
     image: "assets/logoSplash.png"
+
+flutter_icons:
+  image_path: "assets/logoSplash.png"
+  ios: true
+  remove_alpha_ios: true
+  android: "launcher_icon"
+  adaptive_icon_background: "#2196F3"
+  adaptive_icon_foreground: "assets/logoSplash.png"
 
 
 
