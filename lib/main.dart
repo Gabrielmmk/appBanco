@@ -1,9 +1,9 @@
 import 'package:appbancoteste/telaInicio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'cadastro.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'telaprincipal.dart'; // Importe o arquivo da tela principal aqui
 
 void main() {
   runApp(MaterialApp(
@@ -13,7 +13,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,8 @@ class _MyFormPageState extends State<MyFormPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
-  final cpfFormatter = MaskTextInputFormatter(mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')});
+  final cpfFormatter =
+  MaskTextInputFormatter(mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')});
 
   bool _obscureText = false;
 
@@ -47,8 +47,8 @@ class _MyFormPageState extends State<MyFormPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-            'Paradox Bank',
-            style: TextStyle(
+          'Paradox Bank',
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
@@ -56,7 +56,6 @@ class _MyFormPageState extends State<MyFormPage> {
         centerTitle: true,
         backgroundColor: Colors.blue,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
-
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
@@ -82,19 +81,17 @@ class _MyFormPageState extends State<MyFormPage> {
               TextFormField(
                 obscureText: _obscureText == false ? true : false,
                 controller: _emailController,
-                decoration:  InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Senha',
                   suffixIcon: GestureDetector(
                     child: Icon(_obscureText == false ? Icons.visibility_off : Icons.visibility),
-                    onTap: (){
+                    onTap: () {
                       setState(() {
-                        _obscureText =! _obscureText;
+                        _obscureText = !_obscureText;
                       });
                     },
                   ),
-
                 ),
-
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor, insira sua Senha';
@@ -108,17 +105,21 @@ class _MyFormPageState extends State<MyFormPage> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       // Process the data
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Dados certos')));
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text('Dados certos')));
+
+                      // Navegar para a tela principal ao pressionar o botão "Entrar"
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => TelaPrincipal()), // Substitua TelaPrincipal pelo nome correto da sua classe
+                      );
                     }
                   },
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                       foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                      shape: MaterialStatePropertyAll<OutlinedBorder>(
-                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(7))
-                      )
-                  ),
+                      shape: MaterialStateProperty.all<OutlinedBorder>(
+                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)))),
                   child: Text('Entrar'),
                 ),
               ),
@@ -130,7 +131,6 @@ class _MyFormPageState extends State<MyFormPage> {
                     MaterialPageRoute(builder: (context) => CadastroPage()),
                   );
                 },
-
                 child: const Text(
                   'Não tem cadastro? Clique aqui para se cadastrar!',
                   style: TextStyle(
@@ -153,5 +153,3 @@ class _MyFormPageState extends State<MyFormPage> {
     super.dispose();
   }
 }
-
-
