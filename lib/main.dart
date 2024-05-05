@@ -46,7 +46,8 @@ class _MyFormPageState extends State<MyFormPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
-  final cpfFormatter = MaskTextInputFormatter(mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')});
+  final cpfFormatter = MaskTextInputFormatter(
+      mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')});
 
   bool _obscureText = false;
 
@@ -55,16 +56,16 @@ class _MyFormPageState extends State<MyFormPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-            'Paradox Bank',
-            style: TextStyle(
+          'Paradox Bank',
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
         ),
         centerTitle: true,
         backgroundColor: Colors.blue,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
-
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
@@ -90,19 +91,19 @@ class _MyFormPageState extends State<MyFormPage> {
               TextFormField(
                 obscureText: _obscureText == false ? true : false,
                 controller: _emailController,
-                decoration:  InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Senha',
                   suffixIcon: GestureDetector(
-                    child: Icon(_obscureText == false ? Icons.visibility_off : Icons.visibility),
-                    onTap: (){
+                    child: Icon(_obscureText == false
+                        ? Icons.visibility_off
+                        : Icons.visibility),
+                    onTap: () {
                       setState(() {
-                        _obscureText =! _obscureText;
+                        _obscureText = !_obscureText;
                       });
                     },
                   ),
-
                 ),
-
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Por favor, insira sua Senha';
@@ -121,12 +122,13 @@ class _MyFormPageState extends State<MyFormPage> {
                     }
                   },
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blue),
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
                       shape: MaterialStatePropertyAll<OutlinedBorder>(
-                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(7))
-                      )
-                  ),
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7)))),
                   child: Text('Entrar'),
                 ),
               ),
@@ -135,19 +137,24 @@ class _MyFormPageState extends State<MyFormPage> {
                   // Navegar para a página de cadastro
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CadastroPage()),
+                    MaterialPageRoute(
+                        builder: (context) => CadastroPage(
+                              label: 'Nome', // Label para o campo Nome
+                              isPassword: false, // Não é uma senha
+                              controller: TextEditingController(),
+                            )),
                   );
                 },
-
                 child: const Text(
                   'Não tem cadastro? Clique aqui para se cadastrar!',
                   style: TextStyle(
                     color: Colors.blue, // Cor do texto clicável
-                    decoration: TextDecoration.underline, // Adiciona sublinhado ao texto
+                    decoration: TextDecoration
+                        .underline, // Adiciona sublinhado ao texto
                   ),
                 ),
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),
