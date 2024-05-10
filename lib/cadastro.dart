@@ -35,9 +35,8 @@ class CadastroPage extends StatelessWidget {
           cpf: _cpfController.text,
           senha: _senhaController.text);
 
-      dadosUsuario.usuarios.add(usuario);
-
-      print(usuario.nome);
+      //salva um novo usuario
+      dadosUsuario.usuarios.insert(0, usuario);
     }
 
     return DadosUsuario(

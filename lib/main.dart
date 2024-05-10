@@ -1,10 +1,12 @@
 import 'package:appbancoteste/telaInicio.dart';
+import 'package:appbancoteste/usuario.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:appbancoteste/dados_usuario.dart';
 import 'cadastro.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'telaprincipal.dart'; // Importe o arquivo da tela principal aqui
+import 'package:collection/collection.dart';
 
 void main() {
   runApp(
@@ -29,7 +31,9 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: MyFormPage(),
-        routes: {},
+        routes: {
+          //lista de usuario
+        },
       ),
     );
   }
@@ -116,9 +120,38 @@ class _MyFormPageState extends State<MyFormPage> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      // Process the data
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Dados certos')));
+                      DadosUsuario? dadosUsuario = DadosUsuario.of(context);
+                      if (dadosUsuario != null) {
+                        // Validando se o usuário existe com base no CPF e na senha
+                        Usuario? user = dadosUsuario.usuarios.firstWhereOrNull(
+                            (user) =>
+                                user.cpf == _nameController.text &&
+                                user.senha == _emailController.text);
+                        if (user != null) {
+                          // Usuário autenticado com sucesso
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.green,
+                              content: Text('Login bem-sucedido!'),
+                            ),
+                          );
+                          // Navegue para a tela principal
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TelaPrincipal()),
+                          );
+                        } else {
+                          // Credenciais inválidas
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text(
+                                  'Credenciais inválidas. Por favor, tente novamente.'),
+                            ),
+                          );
+                        }
+                      }
                     }
                   },
                   style: ButtonStyle(
