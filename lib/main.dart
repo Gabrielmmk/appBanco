@@ -106,12 +106,12 @@ class _MyFormPageState extends State<MyFormPage> {
                     if (_formKey.currentState!.validate()) {
                       // Process the data
                       ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text('Dados certos')));
+                          .showSnackBar(SnackBar(content: Text('Login Feito com sucesso!')));
 
                       // Navegar para a tela principal ao pressionar o botão "Entrar"
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => TelaPrincipal()), // Substitua TelaPrincipal pelo nome correto da sua classe
+                        MaterialPageRoute(builder: (context) => TelaPrincipal()),
                       );
                     }
                   },
