@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'cadastro.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'telaprincipal.dart'; // Importe o arquivo da tela principal aqui
+import 'telaprincipal.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -56,6 +56,7 @@ class _MyFormPageState extends State<MyFormPage> {
         centerTitle: true,
         backgroundColor: Colors.blue,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
+        automaticallyImplyLeading: false,
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
@@ -105,8 +106,17 @@ class _MyFormPageState extends State<MyFormPage> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       // Process the data
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text('Login Feito com sucesso!')));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            'Login feito com sucesso!',
+                            textAlign: TextAlign.center, // Centralizar o texto
+                            style: TextStyle(color: Colors.white), // Cor do texto
+                          ),
+                          backgroundColor: Colors.green, // Cor de fundo verde
+                          duration: Duration(seconds: 1),
+                        ),
+                      );
 
                       // Navegar para a tela principal ao pressionar o botão "Entrar"
                       Navigator.push(

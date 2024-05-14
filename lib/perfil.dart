@@ -14,9 +14,6 @@ class PerfilPage extends StatelessWidget {
           ),
         ),
         backgroundColor: Colors.blue, // Cor de fundo da AppBar
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
-        ),
         automaticallyImplyLeading: false, // Remove a seta de voltar
         centerTitle: true,
       ),
