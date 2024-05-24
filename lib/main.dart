@@ -1,14 +1,20 @@
 import 'package:appbancoteste/telaInicio.dart';
+import 'package:appbancoteste/usuario.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:appbancoteste/dados_usuario.dart';
 import 'cadastro.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'telaprincipal.dart';
+import 'package:collection/collection.dart';
 
 void main() {
-  runApp(MaterialApp(
-    home: SplashScreen(), // Definindo SplashScreen como a tela inicial
-  ));
+  runApp(
+    DadosUsuario(
+      child: MaterialApp(
+        home: SplashScreen(),
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,12 +22,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Paradox Bank',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return DadosUsuario(
+      child: MaterialApp(
+        title: 'Paradox Bank',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MyFormPage(),
+        routes: {
+          // Adicione as rotas necessárias aqui
+        },
       ),
-      home: const MyFormPage(),
     );
   }
 }
@@ -37,8 +48,8 @@ class _MyFormPageState extends State<MyFormPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
-  final cpfFormatter =
-  MaskTextInputFormatter(mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')});
+  final cpfFormatter = MaskTextInputFormatter(
+      mask: '###.###.###-##', filter: {"#": RegExp(r'[0-9]')});
 
   bool _obscureText = false;
 
@@ -55,8 +66,8 @@ class _MyFormPageState extends State<MyFormPage> {
         ),
         centerTitle: true,
         backgroundColor: Colors.blue,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
-        automaticallyImplyLeading: false,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
       ),
       body: Container(
         padding: const EdgeInsets.all(16.0),
@@ -80,12 +91,14 @@ class _MyFormPageState extends State<MyFormPage> {
                 },
               ),
               TextFormField(
-                obscureText: _obscureText == false ? true : false,
+                obscureText: !_obscureText,
                 controller: _emailController,
                 decoration: InputDecoration(
                   labelText: 'Senha',
                   suffixIcon: GestureDetector(
-                    child: Icon(_obscureText == false ? Icons.visibility_off : Icons.visibility),
+                    child: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
+                    ),
                     onTap: () {
                       setState(() {
                         _obscureText = !_obscureText;
@@ -105,32 +118,49 @@ class _MyFormPageState extends State<MyFormPage> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      // Process the data
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Login feito com sucesso!',
-                            textAlign: TextAlign.center, // Centralizar o texto
-                            style: TextStyle(color: Colors.white), // Cor do texto
-                          ),
-                          backgroundColor: Colors.green, // Cor de fundo verde
-                          duration: Duration(seconds: 1),
-                        ),
-                      );
-
-                      // Navegar para a tela principal ao pressionar o botão "Entrar"
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => TelaPrincipal()),
-                      );
+                      DadosUsuario? dadosUsuario = DadosUsuario.of(context);
+                      if (dadosUsuario != null) {
+                        // Validando se o usuário existe com base no CPF e na senha
+                        Usuario? user = dadosUsuario.usuarios.firstWhereOrNull(
+                                (user) =>
+                            user.cpf == _nameController.text &&
+                                user.senha == _emailController.text);
+                        if (user != null) {
+                          // Usuário autenticado com sucesso
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.green,
+                              content: Text('Login bem-sucedido!'),
+                            ),
+                          );
+                          // Navegue para a tela principal
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TelaPrincipal()),
+                          );
+                        } else {
+                          // Credenciais inválidas
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text(
+                                  'Credenciais inválidas. Por favor, tente novamente.'),
+                            ),
+                          );
+                        }
+                      }
                     }
                   },
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                      shape: MaterialStateProperty.all<OutlinedBorder>(
-                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)))),
-                  child: Text('Entrar'),
+                      backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.blue),
+                      foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                      shape: MaterialStatePropertyAll<OutlinedBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7)))),
+                  child: const Text('Entrar'),
                 ),
               ),
               GestureDetector(
@@ -138,17 +168,23 @@ class _MyFormPageState extends State<MyFormPage> {
                   // Navegar para a página de cadastro
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => CadastroPage()),
+                    MaterialPageRoute(
+                        builder: (context) => CadastroPage(
+                          label: 'Nome', // Label para o campo Nome
+                          isPassword: false, // Não é uma senha
+                          controller: TextEditingController(),
+                        )),
                   );
                 },
                 child: const Text(
                   'Não tem cadastro? Clique aqui para se cadastrar!',
                   style: TextStyle(
                     color: Colors.blue, // Cor do texto clicável
-                    decoration: TextDecoration.underline, // Adiciona sublinhado ao texto
+                    decoration: TextDecoration
+                        .underline, // Adiciona sublinhado ao texto
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),
