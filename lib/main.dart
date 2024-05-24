@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         ),
         home: MyFormPage(),
         routes: {
-          // Adicione as rotas necessárias aqui
+          // Nada
         },
       ),
     );
@@ -133,7 +133,7 @@ class _MyFormPageState extends State<MyFormPage> {
                               content: Text('Login bem-sucedido!'),
                             ),
                           );
-                          // Navegue para a tela principal
+                          // Ir para a tela princcipal
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

@@ -4,11 +4,8 @@ import 'package:appbancoteste/dados_usuario.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Acessando os dados do usuário
     DadosUsuario? dadosUsuario = DadosUsuario.of(context);
-    // Verifica se há um usuário logado
     if (dadosUsuario != null && dadosUsuario.usuarios.isNotEmpty) {
-      // Tem o nome do primeiro usuário (você pode ajustar isso conforme necessário)
       String nomeUsuario = dadosUsuario.usuarios.first.nome;
 
       return Scaffold(

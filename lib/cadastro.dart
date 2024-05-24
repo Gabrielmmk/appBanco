@@ -141,10 +141,7 @@ class CadastroPage extends StatelessWidget {
                   const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
-                      // Verifica todos os campos do formulário
                       if (_formKey.currentState!.validate()) {
-                        // Implemente a lógica de envio do formulário caso o formulário esteja certo
-
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                               backgroundColor: Colors.blue,
