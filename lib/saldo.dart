@@ -12,8 +12,8 @@ class SaldoPage extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.blue, // Cor de fundo da AppBar
-        automaticallyImplyLeading: false, // Remove a seta de voltar
+        backgroundColor: Colors.blue,
+        automaticallyImplyLeading: false,
         centerTitle: true,
       ),
       body: const Center(
